@@ -1,10 +1,9 @@
-import { Message } from "discord.js";
+import { Message } from 'discord.js';
 
-export const name = 'ping';
-export const description = 'Replies with Pong!';
-
-export const execute = (message: Message) => {
-    if (message.content === '!ping') {
-        message.reply("Pong!");
+export default {
+    name: 'ping',
+    description: 'Replies with Pong!',
+    execute(message: Message, args: string[]) {
+        message.reply('Pong!');
     }
 };

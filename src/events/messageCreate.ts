@@ -1,21 +1,21 @@
+import { Message } from 'discord.js';
 import { readdirSync } from 'fs';
 import { join } from 'path';
 
 const commands = new Map();
 
+// Load all commands from the commands folder
 const commandsPath = join(__dirname, '../commands');
-const commandFiles = readdirSync(commandsPath).filter(file => 
-    file.endsWith('.ts') || file.endsWith('.js')
-);
+const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith('.ts') || file.endsWith('.js'));
 
 for (const file of commandFiles) {
     const command = require(join(commandsPath, file));
-    if (command.name && command.execute) {
-        commands.set(command.name, command);
+    if (command.default && command.default.name) {
+        commands.set(command.default.name, command.default);
     }
 }
 
-export const onMessageCreate = (message: any) => {
+export const onMessageCreate = (message: Message) => {
     if (message.author.bot) return;
 
     const prefix = '!';
