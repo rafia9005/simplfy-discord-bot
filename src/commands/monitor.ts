@@ -16,7 +16,6 @@ export default {
     name: "monitor",
     description: "Real-time system monitoring with live updates",
     async execute(message: Message, args: string[]) {
-        // Fix: Check admin permission correctly
         if (!requireAdmin(message)) {
             return;
         }

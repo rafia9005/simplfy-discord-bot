@@ -21,10 +21,8 @@ export default {
         const sentMessage = await message.channel.send({ embeds: [initialEmbed] });
 
         try {
-            // Dynamic import for speedtest-net
             const speedTest = await import('speedtest-net');
             
-            // Run speed test with configuration and await the result
             const data = await speedTest.default({
                 acceptLicense: true,
                 acceptGdpr: true
