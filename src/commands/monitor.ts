@@ -16,7 +16,8 @@ export default {
     name: "monitor",
     description: "Real-time system monitoring with live updates",
     async execute(message: Message, args: string[]) {
-        if(requireAdmin(message)) {
+        // Fix: Check admin permission correctly
+        if (!requireAdmin(message)) {
             return;
         }
 
@@ -84,21 +85,10 @@ export default {
 }
 
 async function getSystemStats(): Promise<SystemStats> {
-    return new Promise((resolve, reject) => {
-        const cpus = os.cpus();
-        let totalIdle = 0;
-        let totalTick = 0;
-
-        cpus.forEach(cpu => {
-            for (const type in cpu.times) {
-                totalTick += cpu.times[type as keyof typeof cpu.times];
-            }
-            totalIdle += cpu.times.idle;
-        });
-
-        const idle = totalIdle / cpus.length;
-        const total = totalTick / cpus.length;
-        const cpuUsage = 100 - ~~(100 * idle / total);
+    return new Promise((resolve) => {
+        // Get CPU usage (simplified approach)
+        const loadAvg = os.loadavg();
+        const cpuUsage = Math.min((loadAvg[0] / os.cpus().length) * 100, 100);
 
         const totalMem = os.totalmem();
         const freeMem = os.freemem();
