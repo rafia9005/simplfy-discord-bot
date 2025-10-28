@@ -4,7 +4,6 @@ import { join } from 'path';
 
 const commands = new Map();
 
-// Load all commands from the commands folder
 const commandsPath = join(__dirname, '../commands');
 const commandFiles = readdirSync(commandsPath).filter(file => file.endsWith('.ts') || file.endsWith('.js'));
 
